@@ -1,23 +1,35 @@
 <template>
-  <div id="app">
-    <h1>TodoList</h1>
-    <hr>
-    <TodoList/>
-    
+  <div class="todo-list" id="app">
+    <h1 class="todo-list__title">Список задач</h1>
+    <TodoList />
   </div>
 </template>
 
 <script>
-import TodoList from "@/components/TodoList"
+import TodoList from "@/components/TodoList";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-  TodoList
-  }
-}
+    TodoList,
+  },
+};
 </script>
 
+<style lang="scss">
+@import "@/assets/styles/style.scss";
+.todo-list {
+  border: 0.2rem solid $main-color;
+  border-radius: 1rem;
+  width: 100%;
+  max-width: 30rem;
+  margin: 0 auto;
+  background-color: $main-color;
 
-<style>
+  &__title {
+    padding: 0.5rem;
+    text-align: center;
+    color: $font-color;
+  }
+}
 </style>
