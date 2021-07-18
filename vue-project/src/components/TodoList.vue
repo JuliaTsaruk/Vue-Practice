@@ -55,12 +55,8 @@
   }
 
   &__add-button {
-    background-color: $main-color;
-    color: $font-color;
+    @include button;
     padding: 0.6rem 1.1rem;
-    border: 0.05rem solid $main-color;
-    border-radius: 0.1rem;
-    font-weight: bold;
   }
 }
 
@@ -157,12 +153,9 @@
 
   &__choose-all,
   &__delete-all {
+    @include button;
     padding: 0.6rem 0;
     width: 30%;
-    border: none;
-    background-color: $main-color;
-    color: $font-color;
-    font-weight: bold;
   }
 }
 
