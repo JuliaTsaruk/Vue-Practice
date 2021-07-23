@@ -1,10 +1,23 @@
 <template>
-  <label>
-    <input />
-    <span></span>
-    <button></button>
+  <label v-bind:class="{ done: todo.isChecked }">
+    <input type="checkbox" v-on:change="todo.isChecked = !todo.isChecked" />
+    <span>
+      {{ todo.title }}
+    </span>
+    <button v-on:click="$emit('remove-task', todo.id)"></button>
   </label>
 </template>
+
+<script>
+export default {
+  props: {
+    todo: {
+      type: Object,
+      required: true,
+    },
+  },
+};
+</script>
 
 <style lang="scss" scoped>
 label {
@@ -87,6 +100,9 @@ button:after {
   transform: rotate(-45deg);
 }
 
+.done {
+  text-decoration: line-through;
+}
 @media screen and (max-width: 850px) {
   label {
     padding: 0.5rem 1rem;

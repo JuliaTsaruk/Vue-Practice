@@ -1,18 +1,23 @@
 <template>
   <div>
-    <div class="tasks-section">
+    <div :class="$style.tasksSection">
       <InputTask />
-      <div class="task-list">
-        <ListItem />
-        <ListItem />
-        <ListItem />
+      <div :class="$style.taskList">
+        <ListItem
+          v-for="todo of todos"
+          :key="todo.id"
+          v-bind:todo="todo"
+          v-on:remove-task="removeTask"
+        />
       </div>
-      <div class="manage-tasks">
+      <div :class="$style.manageTasks">
         <Buttons title="Выполнить всё" />
-        <Buttons class="btn" title="Удалить всё" />
+        <Buttons title="Удалить всё" />
       </div>
     </div>
-    <p class="task-left">Ты молодец! Осталось выполнить:<span>100%</span></p>
+    <p :class="$style.taskLeft">
+      Ты молодец! Осталось выполнить:<span>100%</span>
+    </p>
   </div>
 </template>
 
@@ -22,42 +27,48 @@ import ListItem from "@/components/atoms/ListItem";
 import Buttons from "@/components/atoms/Buttons";
 
 export default {
+  props: ["todos"],
   components: {
     InputTask,
     ListItem,
     Buttons,
   },
+  methods: {
+    removeTask(id) {
+      this.$emit("remove-task", id);
+    },
+  },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" module>
 @import "@/assets/styles/style.scss";
 
-.tasks-section {
+.tasksSection {
   background-color: $font-color;
   padding-bottom: 1rem;
 }
 
-.task-list {
+.taskList {
   list-style: none;
   padding: 0;
   margin: 2rem 2rem 1rem 2rem;
 }
 
-.manage-tasks {
+.manageTasks {
   display: flex;
   justify-content: space-between;
   margin: 0 2rem;
 }
 
-.task-left {
+.taskLeft {
   text-align: center;
   color: $font-color;
   font-size: 1.3rem;
 }
 
 @media screen and (max-width: 850px) {
-  .new-task {
+  .newTask {
     margin-left: 1rem;
 
     &__input {
@@ -71,11 +82,11 @@ export default {
     }
   }
 
-  .task-list {
+  .taskList {
     margin: 1rem;
   }
 
-  .manage-tasks {
+  .manageTasks {
     margin: 0 1rem;
   }
 }

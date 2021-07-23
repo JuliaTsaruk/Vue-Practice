@@ -1,8 +1,10 @@
 <template>
-  <div class="new-task">
-    <h2 class="new-task__what-task">Какие планы на сегодня?</h2>
-    <Input />
-    <Buttons />
+  <div :class="$style.newTask">
+    <h2 :class="$style.whatTask">Какие планы на сегодня?</h2>
+    <form v-on:submit.prevent="addTask">
+      <Input />
+      <Buttons v-bind:type="submit" />
+    </form>
   </div>
 </template>
 
@@ -10,24 +12,30 @@
 import Input from "@/components/atoms/Input";
 import Buttons from "@/components/atoms/Buttons";
 export default {
+  name: "new-task",
   components: {
     Input,
     Buttons,
   },
+  methods: {
+    addTask() {
+      console.log("bbbb");
+    },
+  },
 };
 </script>
 
-<style lang="scss" scoped>
-.new-task {
+<style lang="scss" module>
+.newTask {
   margin-left: 2rem;
+}
 
-  &__what-task {
-    padding-top: 1rem;
-  }
+.whatTask {
+  padding-top: 1rem;
 }
 
 @media screen and (max-width: 850px) {
-  .new-task {
+  .newTask {
     margin-left: 1rem;
   }
 }

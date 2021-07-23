@@ -1,8 +1,18 @@
 <template>
-  <input type="text" />
+  <input type="text" v-model="title" />
 </template>
 
-<style lang="scss">
+<script>
+export default {
+  data() {
+    return {
+      title: "",
+    };
+  },
+};
+</script>
+
+<style lang="scss" scoped>
 input {
   margin-right: 0.6rem;
   height: 1.8rem;
