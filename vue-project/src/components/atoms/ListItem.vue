@@ -1,20 +1,21 @@
 <template>
-  <label v-bind:class="{ done: todo.isChecked }">
-    <input type="checkbox" v-on:change="todo.isChecked = !todo.isChecked" />
-    <span>
-      {{ todo.title }}
-    </span>
-    <button v-on:click="$emit('remove-task', todo.id)"></button>
+  <label :class="{ done: isChecked }">
+    <input
+      type="checkbox"
+      :checked="isChecked"
+      v-on:change="isChecked = !isChecked"
+    />
+    <span>{{ title }}</span>
+    <button></button>
   </label>
 </template>
 
 <script>
 export default {
   props: {
-    todo: {
-      type: Object,
-      required: true,
-    },
+    id: Number,
+    title: String,
+    isChecked: Boolean,
   },
 };
 </script>

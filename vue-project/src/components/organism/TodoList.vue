@@ -2,12 +2,15 @@
   <div>
     <div :class="$style.tasksSection">
       <InputTask />
+      <RadioButtons />
       <div :class="$style.taskList">
         <ListItem
           v-for="todo of todos"
           :key="todo.id"
-          v-bind:todo="todo"
-          v-on:remove-task="removeTask"
+          :todo="todo"
+          :id="todo.id"
+          :title="todo.title"
+          :isChecked="todo.isChecked"
         />
       </div>
       <div :class="$style.manageTasks">
@@ -25,19 +28,25 @@
 import InputTask from "@/components/molecules/InputTask";
 import ListItem from "@/components/atoms/ListItem";
 import Buttons from "@/components/atoms/Buttons";
+import RadioButtons from "@/components/atoms/RadioButtons";
 
 export default {
-  props: ["todos"],
+  data() {
+    return {
+      todos: [
+        { id: 1, title: "Buy bread", isChecked: true },
+        { id: 2, title: "Buy milk", isChecked: false },
+        { id: 3, title: "Buy apples", isChecked: false },
+      ],
+    };
+  },
   components: {
     InputTask,
     ListItem,
     Buttons,
+    RadioButtons,
   },
-  methods: {
-    removeTask(id) {
-      this.$emit("remove-task", id);
-    },
-  },
+  props: {},
 };
 </script>
 

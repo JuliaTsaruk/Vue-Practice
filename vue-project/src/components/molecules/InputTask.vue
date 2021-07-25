@@ -1,9 +1,9 @@
 <template>
   <div :class="$style.newTask">
     <h2 :class="$style.whatTask">Какие планы на сегодня?</h2>
-    <form v-on:submit.prevent="addTask">
+    <form>
       <Input />
-      <Buttons v-bind:type="submit" />
+      <Buttons />
     </form>
   </div>
 </template>
@@ -16,11 +16,6 @@ export default {
   components: {
     Input,
     Buttons,
-  },
-  methods: {
-    addTask() {
-      console.log("bbbb");
-    },
   },
 };
 </script>
