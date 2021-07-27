@@ -2,12 +2,18 @@
   <div>
     <div :class="$style.tasksSection">
       <InputTask />
-      <RadioButtons />
+      <div :class="$style.radioBtn">
+        <RadioButtons 
+        v-for="radioButton of radioButtons"
+        :key="radioButton.id"
+        :buttonTitle="radioButton.buttonTitle"
+        :id="radioButton.id"
+        />
+      </div>
       <div :class="$style.taskList">
         <ListItem
           v-for="todo of todos"
           :key="todo.id"
-          :todo="todo"
           :id="todo.id"
           :title="todo.title"
           :isChecked="todo.isChecked"
@@ -38,6 +44,11 @@ export default {
         { id: 2, title: "Buy milk", isChecked: false },
         { id: 3, title: "Buy apples", isChecked: false },
       ],
+      radioButtons: [
+        {id: 1, buttonTitle: "Все"},
+        {id: 2, buttonTitle: "Выполненные"},
+        {id: 3, buttonTitle: "Невыполненные"},
+      ],
     };
   },
   components: {
@@ -56,6 +67,12 @@ export default {
 .tasksSection {
   background-color: $font-color;
   padding-bottom: 1rem;
+}
+
+.radioBtn{
+  width: 100%;
+  display: flex;
+  margin: 2rem;
 }
 
 .taskList {

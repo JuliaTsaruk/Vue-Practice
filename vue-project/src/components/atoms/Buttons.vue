@@ -19,6 +19,7 @@ button {
   @include button;
   padding: 0.6rem 0.3rem;
   width: 27%;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 850px) {
