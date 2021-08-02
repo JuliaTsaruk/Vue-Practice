@@ -3,16 +3,16 @@
     <div :class="$style.tasksSection">
       <InputTask />
       <div :class="$style.radioBtn">
-        <RadioButtons 
-        v-for="radioButton of radioButtons"
-        :key="radioButton.id"
-        :buttonTitle="radioButton.buttonTitle"
-        :id="radioButton.id"
+        <RadioButtons
+          v-for="radioButton of radioBtns"
+          :key="radioButton.id"
+          :buttonTitle="radioButton.buttonTitle"
+          :id="radioButton.id"
         />
       </div>
       <div :class="$style.taskList">
         <ListItem
-          v-for="todo of todos"
+          v-for="todo of validTasks"
           :key="todo.id"
           :id="todo.id"
           :title="todo.title"
@@ -25,7 +25,7 @@
       </div>
     </div>
     <p :class="$style.taskLeft">
-      Ты молодец! Осталось выполнить:<span>100%</span>
+      Ты молодец! Осталось выполнить:<span>{{showResult}}</span>
     </p>
   </div>
 </template>
@@ -35,29 +35,20 @@ import InputTask from "@/components/molecules/InputTask";
 import ListItem from "@/components/atoms/ListItem";
 import Buttons from "@/components/atoms/Buttons";
 import RadioButtons from "@/components/atoms/RadioButtons";
+import { mapGetters} from "vuex";
 
 export default {
-  data() {
-    return {
-      todos: [
-        { id: 1, title: "Buy bread", isChecked: true },
-        { id: 2, title: "Buy milk", isChecked: false },
-        { id: 3, title: "Buy apples", isChecked: false },
-      ],
-      radioButtons: [
-        {id: 1, buttonTitle: "Все"},
-        {id: 2, buttonTitle: "Выполненные"},
-        {id: 3, buttonTitle: "Невыполненные"},
-      ],
-    };
+  name: "todoList",
+  computed: {
+    ...mapGetters(["validTasks", "radioBtns", "showTasks", "showResult"]),
   },
+
   components: {
     InputTask,
     ListItem,
     Buttons,
     RadioButtons,
   },
-  props: {},
 };
 </script>
 
@@ -69,7 +60,7 @@ export default {
   padding-bottom: 1rem;
 }
 
-.radioBtn{
+.radioBtn {
   width: 100%;
   display: flex;
   margin: 2rem;

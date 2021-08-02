@@ -1,13 +1,26 @@
 <template>
-  <button>{{ title }}</button>
+  <button @click="click">{{ title }}</button>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: {
     title: {
       type: String,
       default: "Добавить",
+    },
+  },
+  methods: {
+    ...mapMutations(["clearAll"]),
+    click() {
+      if (this.title === "Удалить всё") {
+        this.$store.commit("clearAll");
+      }
+
+      if (this.title == "Выполнить всё") {
+        this.$store.commit("doneAll");
+      }
     },
   },
 };

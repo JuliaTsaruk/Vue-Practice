@@ -1,22 +1,36 @@
 <template>
   <label :class="{ done: isChecked }">
-    <input
-      type="checkbox"
-      :checked="isChecked"
-      v-on:change="isChecked = !isChecked"
+    <input type="checkbox" 
+    :checked="isChecked" 
+    v-on:change="isChecked = !isChecked"
     />
     <span>{{ title }}</span>
-    <button></button>
+    <button v-on:click="removeTask"></button>
   </label>
 </template>
 
 <script>
+//import { mapGetters } from "vuex";
+import { mapMutations } from "vuex";
 export default {
   props: {
     id: Number,
     title: String,
     isChecked: Boolean,
   },
+
+  /*computed: {
+    ...mapGetters(["showTasks"]),
+  },*/
+
+  methods: {
+    ...mapMutations(["deleteTask"]),
+      removeTask() {
+        this.deleteTask({
+        id: this.id
+       })
+    }  
+  }
 };
 </script>
 
