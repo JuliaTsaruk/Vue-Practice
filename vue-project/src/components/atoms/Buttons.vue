@@ -12,14 +12,13 @@ export default {
     },
   },
   methods: {
-    ...mapMutations(["clearAll"]),
+    ...mapMutations(["clearAll", "doneAll"]),
     click() {
       if (this.title === "Удалить всё") {
-        this.$store.commit("clearAll");
+        this.clearAll();
       }
-
       if (this.title == "Выполнить всё") {
-        this.$store.commit("doneAll");
+        this.doneAll();
       }
     },
   },
@@ -34,10 +33,11 @@ button {
   width: 27%;
   cursor: pointer;
 }
-
 @media screen and (max-width: 850px) {
   button {
-    width: 30%;
+    width: 34%;
+    padding: 0.56rem 0;
+    font-size: 0.7rem;
   }
 }
 </style>

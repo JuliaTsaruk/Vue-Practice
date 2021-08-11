@@ -1,8 +1,12 @@
 <template>
   <div :class="$style.newTask">
-    <h2 :class="$style.whatTask">Какие планы на сегодня?</h2>
+    <h2 :class="$style.newTask__whatTask">Какие планы на сегодня?</h2>
     <form @submit.prevent="submit">
-      <input :class="$style.createNewTask" type="text" v-model="title" />
+      <input
+        :class="$style.newTask__createNewTask"
+        type="text"
+        v-model="newInput"
+      />
       <Buttons />
     </form>
   </div>
@@ -16,22 +20,16 @@ export default {
   components: {
     Buttons,
   },
-
   data() {
     return {
-      title: "",
+      newInput: "",
     };
   },
-
   methods: {
     ...mapMutations(["addTask"]),
     submit() {
-      this.addTask({
-        title: this.title,
-        id: Date.now(),
-        isChecked: false,
-      });
-      this.title = "";
+      this.addTask(this.newInput);
+      this.newInput = "";
     },
   },
 };
@@ -40,28 +38,28 @@ export default {
 <style lang="scss" module>
 .newTask {
   margin-left: 2rem;
-}
-
-.whatTask {
-  padding-top: 1rem;
-}
-
-.createNewTask {
-  margin-right: 0.6rem;
-  height: 1.8rem;
-  width: 62%;
-  border: 0.1rem solid $main-color;
+  &__whatTask {
+    padding-top: 1rem;
+  }
+  &__createNewTask {
+    margin-right: 0.6rem;
+    height: 1.8rem;
+    width: 62%;
+    border: 0.1rem solid $main-color;
+  }
 }
 
 @media screen and (max-width: 850px) {
   .newTask {
+    &__whatTask {
+      font-size: 1.4rem;
+    }
     margin-left: 1rem;
-  }
-
-  .createNewTask {
-    margin-right: 0.5rem;
-    height: 1.5rem;
-    width: 58%;
+    &__createNewTask {
+      margin-right: 0.1rem;
+      height: 1.5rem;
+      width: 58%;
+    }
   }
 }
 </style>

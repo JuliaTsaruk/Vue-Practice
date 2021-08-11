@@ -1,36 +1,36 @@
 <template>
-  <!--<div>
+  <label>
     <input
+      type="radio"
       class="filter-input"
       id="select-task"
       name="filter"
-      type="radio"
-      
-    />
-    <label for="select-task">{{buttonTitle}}</label>
-  </div>-->
-  <label>
-    <input type="radio"
-    class="filter-input"
-    id="select-task"
-    name="filter"
+      :checked="isPicked"
+      @click="change"
     />
     <span>{{ buttonTitle }}</span>
   </label>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: {
-    id: Number,
+    id: String,
     buttonTitle: String,
     isPicked: Boolean,
   },
-}
+  methods: {
+    ...mapMutations(["changeFilter", "changeFilterStatus"]),
+    change() {
+      this.changeFilter(this.id);
+      this.changeFilterStatus(this.id);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-
 label > input {
   position: absolute;
   z-index: -1;
@@ -46,12 +46,20 @@ label > span {
   font-weight: bold;
   font-size: 1.05rem;
   width: 7.8rem;
+  max-width: 15rem;
   justify-content: center;
 }
-
-label > input:checked+span{
+label > input:checked + span {
   border-color: $main-color;
   background-color: $main-color;
-  color: $font-color; 
+  color: $font-color;
+}
+
+@media screen and (max-width: 750px) {
+  label > span {
+    font-size: 0.7rem;
+    width: 4.8rem;
+    margin: 0;
+  }
 }
 </style>

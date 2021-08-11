@@ -1,20 +1,18 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { v4 as uuidv4 } from "uuid";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    todos: [
-      { id: 1, title: "Buy bread", isChecked: true },
-      { id: 2, title: "Buy milk", isChecked: true },
-      { id: 3, title: "Buy apples", isChecked: false },
-    ],
+    todos: [],
     radioButtons: [
-      { id: 1, buttonTitle: "Все", isPicked: true},
-      { id: 2, buttonTitle: "Выполненные",isPicked: false},
-      { id: 3, buttonTitle: "Невыполненные",isPicked: false},
+      { id: uuidv4(), buttonTitle: "Все", isPicked: true },
+      { id: uuidv4(), buttonTitle: "Выполненные", isPicked: false },
+      { id: uuidv4(), buttonTitle: "Невыполненные", isPicked: false },
     ],
+    buttonTitle: "Все",
   },
 
   getters: {
@@ -23,66 +21,72 @@ export default new Vuex.Store({
     },
 
     radioBtns(state) {
+      console.log(state.radioButtons);
       return state.radioButtons;
     },
 
-    validTasks(state) {
-      return state.todos.filter((el) => {
-        return el.title;
-      });
-    },
-
     showTasks(state) {
-      if (state.radioButtons.buttonTitle === "Выполненные") {
-        return state.todos.filter((todo) => todo.isChecked);
-      } else if (state.radioButtons.buttonTitle === "Невыполненные") {
-        return state.todos.filter((todo) => !todo.isChecked);
-      } else {
-        return state.todos;
+      switch (state.buttonTitle) {
+        case "Невыполненные":
+          return state.todos.filter((todo) => !todo.isChecked);
+        case "Выполненные":
+          return state.todos.filter((todo) => todo.isChecked);
+        default:
+          return state.todos;
       }
     },
 
-    showResult(state){console.log(state.todos)
-        let r = state.todos.length;
-        let q = state.todos.filter(x=> x.isChecked === true).length;
-        
-        if(r === 0){
-            return 0
-        }else{
-            return Math.round(100-(q *100/r)) + "%";
-        }
-    }
+    showResult(state) {
+      let isCheckedElLength = state.todos.filter(
+        (todo) => todo.isChecked === true
+      ).length;
+      if (state.todos.length === 0) {
+        return 0 + "%";
+      }
+      return Math.round((isCheckedElLength / state.todos.length) * 100) + "%";
+    },
   },
 
   mutations: {
     addTask(state, newTask) {
-      state.todos.unshift(newTask);
+      if (newTask) {
+        let task = { title: newTask, id: uuidv4(), isChecked: false };
+        state.todos.unshift(task);
+      }
     },
 
     clearAll(state) {
       state.todos = [];
-      
-      /*let message = document.createElement("div") ;
-      message.className = "allDoneMessage";
-      message.innerHTML = "ggggg";
-      document.body.append(message);*/
     },
 
     doneAll(state) {
-      console.log(state.todos);
-      state.todos.filter((e) => {
-        if (e.isChecked == false) {
-          e.isChecked = true;
+      state.todos.filter((todo) => {
+        if (todo.isChecked == false) {
+          todo.isChecked = true;
         }
       });
     },
 
     deleteTask(state, id) {
-      state.todos.filter((el) => {
-        if (el.id !== id) {
-          return el.id;
-        }
-      });
+      state.todos = state.todos.filter((todo) => todo.id !== id);
+    },
+
+    changeTaskStatus(state, id) {
+      state.todos = state.todos.map((todo) =>
+        todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo
+      );
+    },
+
+    changeFilter(state, id) {
+      state.radioButtons.map((btn) =>
+        btn.id === id ? (state.buttonTitle = btn.buttonTitle) : btn
+      );
+    },
+
+    changeFilterStatus(state, id) {
+      state.radioButtons = state.radioButtons.map((btn) =>
+        btn.id === id ? { ...btn, isPicked: btn.isPicked } : btn
+      );
     },
   },
 });
