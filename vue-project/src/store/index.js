@@ -21,7 +21,6 @@ export default new Vuex.Store({
     },
 
     radioBtns(state) {
-      console.log(state.radioButtons);
       return state.radioButtons;
     },
 
@@ -60,11 +59,7 @@ export default new Vuex.Store({
     },
 
     doneAll(state) {
-      state.todos.filter((todo) => {
-        if (todo.isChecked == false) {
-          todo.isChecked = true;
-        }
-      });
+      state.todos.filter((todo) => todo.isChecked === false ? todo.isChecked = true : todo.isChecked)
     },
 
     deleteTask(state, id) {
