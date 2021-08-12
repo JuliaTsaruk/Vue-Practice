@@ -72,7 +72,7 @@ export default {
     margin: 2rem 2rem 1rem 2rem;
   }
   &__noTaskMessage {
-    width: 90%;
+    width: 87%;
     min-height: 6rem;
     margin: 2rem auto;
     font-size: 1.5rem;

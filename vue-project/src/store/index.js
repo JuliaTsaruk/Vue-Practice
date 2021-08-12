@@ -59,7 +59,9 @@ export default new Vuex.Store({
     },
 
     doneAll(state) {
-      state.todos.filter((todo) => todo.isChecked === false ? todo.isChecked = true : todo.isChecked)
+      state.todos.filter((todo) =>
+        todo.isChecked === false ? (todo.isChecked = true) : todo.isChecked
+      );
     },
 
     deleteTask(state, id) {
