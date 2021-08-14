@@ -46,6 +46,9 @@ export default {
   computed: {
     ...mapGetters(["allTasks", "radioBtns", "showTasks", "showResult"]),
   },
+  // mounted:{
+
+  // },
   components: {
     InputTask,
     ListItem,

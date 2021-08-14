@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    todos: [],
+    todos: JSON.parse(localStorage.getItem('todos')),
     radioButtons: [
       { id: uuidv4(), buttonTitle: "Все", isPicked: true },
       { id: uuidv4(), buttonTitle: "Выполненные", isPicked: false },
@@ -51,27 +51,32 @@ export default new Vuex.Store({
       if (newTask) {
         let task = { title: newTask, id: uuidv4(), isChecked: false };
         state.todos.unshift(task);
+        localStorage.setItem("todos", JSON.stringify(state.todos))
       }
     },
 
     clearAll(state) {
       state.todos = [];
+      localStorage.setItem("todos", JSON.stringify(state.todos))
     },
 
     doneAll(state) {
       state.todos.filter((todo) =>
         todo.isChecked === false ? (todo.isChecked = true) : todo.isChecked
       );
+      localStorage.setItem("todos", JSON.stringify(state.todos))
     },
 
     deleteTask(state, id) {
       state.todos = state.todos.filter((todo) => todo.id !== id);
+      localStorage.setItem("todos", JSON.stringify(state.todos))
     },
 
     changeTaskStatus(state, id) {
       state.todos = state.todos.map((todo) =>
         todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo
       );
+      localStorage.setItem("todos", JSON.stringify(state.todos))
     },
 
     changeFilter(state, id) {
