@@ -1,13 +1,25 @@
 <template>
-  <button>{{ title }}</button>
+  <button @click="click">{{ title }}</button>
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: {
     title: {
       type: String,
       default: "Добавить",
+    },
+  },
+  methods: {
+    ...mapMutations(["clearAll", "doneAll"]),
+    click() {
+      if (this.title === "Удалить всё") {
+        this.clearAll();
+      }
+      if (this.title == "Выполнить всё") {
+        this.doneAll();
+      }
     },
   },
 };
@@ -21,10 +33,11 @@ button {
   width: 27%;
   cursor: pointer;
 }
-
 @media screen and (max-width: 850px) {
   button {
-    width: 30%;
+    width: 34%;
+    padding: 0.56rem 0;
+    font-size: 0.7rem;
   }
 }
 </style>

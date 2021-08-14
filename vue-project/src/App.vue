@@ -1,13 +1,12 @@
 <template>
   <div :class="$style.tasksList" id="app">
-    <h1 :class="$style.title">Список задач</h1>
+    <h1 :class="$style.tasksList__title">Список задач</h1>
     <TodoList />
   </div>
 </template>
 
 <script>
 import TodoList from "@/components/organism/TodoList";
-
 export default {
   name: "App",
   components: {
@@ -25,10 +24,17 @@ export default {
   max-width: 30rem;
   margin: 0 auto;
   background-color: $main-color;
+  &__title {
+    padding: 0.5rem;
+    text-align: center;
+    color: $font-color;
+  }
 }
-.title {
-  padding: 0.5rem;
-  text-align: center;
-  color: $font-color;
+@media screen and (max-width: 850px) {
+  .tasksList {
+    &__title {
+      font-size: 1.8rem;
+    }
+  }
 }
 </style>
