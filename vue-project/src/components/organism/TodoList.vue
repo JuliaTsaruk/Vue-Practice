@@ -2,7 +2,7 @@
   <div>
     <div :class="$style.tasksSection">
       <InputTask />
-      <div :class="$style.tasksSection__radioBtn">
+      <div :class="$style.radioBtn">
         <RadioButtons
           v-for="radioButton of radioBtns"
           :key="radioButton.id"
@@ -11,7 +11,7 @@
           :isPicked="radioButton.isPicked"
         />
       </div>
-      <div v-if="showTasks.length > 0" :class="$style.tasksSection__taskList">
+      <div v-if="showTasks.length > 0" :class="$style.taskList">
         <ListItem
           v-for="todo of showTasks"
           :key="todo.id"
@@ -20,12 +20,12 @@
           :isChecked="todo.isChecked"
         />
       </div>
-      <div :class="$style.tasksSection__noTaskMessage" v-else>
+      <div :class="$style.noTaskMessage" v-else>
         Список заданий пуст
       </div>
-      <div :class="$style.tasksSection__manageTasks">
-        <Buttons title="Выполнить всё" />
-        <Buttons title="Удалить всё" />
+      <div :class="$style.manageTasks">
+        <Button title="Выполнить всё" />
+        <Button title="Удалить всё" />
       </div>
     </div>
     <p :class="$style.taskLeft">
@@ -37,7 +37,7 @@
 <script>
 import InputTask from "@/components/molecules/InputTask";
 import ListItem from "@/components/atoms/ListItem";
-import Buttons from "@/components/atoms/Buttons";
+import Button from "@/components/atoms/Button";
 import RadioButtons from "@/components/atoms/RadioButtons";
 import { mapGetters } from "vuex";
 
@@ -46,13 +46,13 @@ export default {
   computed: {
     ...mapGetters(["allTasks", "radioBtns", "showTasks", "showResult"]),
   },
-  // mounted:{
-
-  // },
+  mounted() {
+    this.$store.dispatch("getFromStorage");
+  },
   components: {
     InputTask,
     ListItem,
-    Buttons,
+    Button,
     RadioButtons,
   },
 };
@@ -63,18 +63,18 @@ export default {
 .tasksSection {
   background-color: $font-color;
   padding-bottom: 1rem;
-  &__radioBtn {
+  .radioBtn {
     width: 100%;
     display: flex;
     margin: 2rem 0;
     justify-content: center;
   }
-  &__taskList {
+  .taskList {
     list-style: none;
     padding: 0;
     margin: 2rem 2rem 1rem 2rem;
   }
-  &__noTaskMessage {
+  .noTaskMessage {
     width: 87%;
     min-height: 6rem;
     margin: 2rem auto;
@@ -85,7 +85,7 @@ export default {
     align-items: center;
     border: 1px solid $main-color;
   }
-  &__manageTasks {
+  .manageTasks {
     display: flex;
     justify-content: space-between;
     margin: 0 2rem;
@@ -99,16 +99,16 @@ export default {
 
 @media screen and (max-width: 850px) {
   .tasksSection {
-    &__radioBtn {
+    .radioBtn {
       margin: 1rem 0;
     }
-    &__noTaskMessage {
+    .noTaskMessage {
       font-size: 1.3rem;
     }
-    &__taskList {
+    .taskList {
       margin: 1rem;
     }
-    &__manageTasks {
+    .manageTasks {
       margin: 0 1rem;
     }
   }

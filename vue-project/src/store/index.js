@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    todos: JSON.parse(localStorage.getItem('todos')),
+    todos: [],
     radioButtons: [
       { id: uuidv4(), buttonTitle: "Все", isPicked: true },
       { id: uuidv4(), buttonTitle: "Выполненные", isPicked: false },
@@ -19,11 +19,9 @@ export default new Vuex.Store({
     allTasks(state) {
       return state.todos;
     },
-
     radioBtns(state) {
       return state.radioButtons;
     },
-
     showTasks(state) {
       switch (state.buttonTitle) {
         case "Невыполненные":
@@ -34,9 +32,8 @@ export default new Vuex.Store({
           return state.todos;
       }
     },
-
     showResult(state) {
-      let isCheckedElLength = state.todos.filter(
+      const isCheckedElLength = state.todos.filter(
         (todo) => todo.isChecked === true
       ).length;
       if (state.todos.length === 0) {
@@ -49,46 +46,49 @@ export default new Vuex.Store({
   mutations: {
     addTask(state, newTask) {
       if (newTask) {
-        let task = { title: newTask, id: uuidv4(), isChecked: false };
+        const task = { title: newTask, id: uuidv4(), isChecked: false };
         state.todos.unshift(task);
-        localStorage.setItem("todos", JSON.stringify(state.todos))
+        localStorage.setItem("todos", JSON.stringify(state.todos));
       }
     },
-
     clearAll(state) {
       state.todos = [];
-      localStorage.setItem("todos", JSON.stringify(state.todos))
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
-
     doneAll(state) {
       state.todos.filter((todo) =>
         todo.isChecked === false ? (todo.isChecked = true) : todo.isChecked
       );
-      localStorage.setItem("todos", JSON.stringify(state.todos))
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
-
     deleteTask(state, id) {
       state.todos = state.todos.filter((todo) => todo.id !== id);
-      localStorage.setItem("todos", JSON.stringify(state.todos))
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
-
     changeTaskStatus(state, id) {
       state.todos = state.todos.map((todo) =>
         todo.id === id ? { ...todo, isChecked: !todo.isChecked } : todo
       );
-      localStorage.setItem("todos", JSON.stringify(state.todos))
+      localStorage.setItem("todos", JSON.stringify(state.todos));
     },
-
     changeFilter(state, id) {
       state.radioButtons.map((btn) =>
         btn.id === id ? (state.buttonTitle = btn.buttonTitle) : btn
       );
     },
-
     changeFilterStatus(state, id) {
       state.radioButtons = state.radioButtons.map((btn) =>
         btn.id === id ? { ...btn, isPicked: btn.isPicked } : btn
       );
+    },
+    getFromStorage(state) {
+      state.todos = JSON.parse(localStorage.getItem("todos")) || new Array();
+    },
+  },
+
+  actions: {
+    getFromStorage(context) {
+      context.commit("getFromStorage");
     },
   },
 });

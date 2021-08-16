@@ -14,11 +14,13 @@ export default {
   methods: {
     ...mapMutations(["clearAll", "doneAll"]),
     click() {
-      if (this.title === "Удалить всё") {
-        this.clearAll();
-      }
-      if (this.title == "Выполнить всё") {
-        this.doneAll();
+      switch (this.title) {
+        case "Удалить всё":
+          this.clearAll();
+          break;
+        case "Выполнить всё":
+          this.doneAll();
+          break;
       }
     },
   },

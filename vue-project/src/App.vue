@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.tasksList" id="app">
-    <h1 :class="$style.tasksList__title">Список задач</h1>
+    <h1>Список задач</h1>
     <TodoList />
   </div>
 </template>
@@ -24,7 +24,7 @@ export default {
   max-width: 30rem;
   margin: 0 auto;
   background-color: $main-color;
-  &__title {
+  h1 {
     padding: 0.5rem;
     text-align: center;
     color: $font-color;
@@ -32,7 +32,7 @@ export default {
 }
 @media screen and (max-width: 850px) {
   .tasksList {
-    &__title {
+    h1 {
       font-size: 1.8rem;
     }
   }
